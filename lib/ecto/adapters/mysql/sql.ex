@@ -251,7 +251,7 @@ defmodule Ecto.Adapters.Mysql.SQL do
 
   Enum.each(functions, fn({key, val}) ->
     defp expr({ unquote(key), _, arg_list }, vars) do
-      "#{unquote(val)}(#{Enum.map_join(arg_list, ", ", expr(&1, vars))})"
+      "#{unquote(val)}(#{Enum.map_join(arg_list, ", ", &expr(&1, vars))})"
     end
   end)
 
@@ -272,7 +272,7 @@ defmodule Ecto.Adapters.Mysql.SQL do
   end
 
   defp expr({ :in, _, [left, right] }, vars) do
-    "#{expr(left, vars)} IN (#{Enum.map_join(right, ", ", expr(&1, vars))})"
+    "#{expr(left, vars)} IN (#{Enum.map_join(right, ", ", &expr(&1, vars))})"
   end
 
   defp expr(literal, _vars), do: literal(literal)
