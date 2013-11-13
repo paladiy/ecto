@@ -8,7 +8,7 @@ defmodule Ecto.Mixfile do
       env: envs,
       name: "Ecto",
       source_url: "https://github.com/elixir-lang/ecto",
-      elixir: "~> 0.10.2" ]
+      elixir: "~> 0.11.1" ]
   end
 
   def application do
