@@ -23,6 +23,10 @@ defmodule Ecto.Adapters.Mysql do
     prepare_start(repo)
   end
 
+  def start_link(repo) do
+    prepare_start(repo)
+  end
+
   def all(repo, Query[] = query) do
     sql = SQL.select(query)
     result = execute(repo, sql)
@@ -152,6 +156,7 @@ defmodule Ecto.Adapters.Mysql do
     worker_opts = fix_worker_opts(opts)
 
     :emysql.add_pool(repo.__mysql__(:conn_name), 1, worker_opts[:username], worker_opts[:password], worker_opts[:hostname], worker_opts[:port], worker_opts[:database], :utf8)
+    { :ok, self }
   end
 
   defp fix_worker_opts(opts) do
